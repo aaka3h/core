@@ -62,8 +62,14 @@ export class AnalogTransientSimulation extends AnalogAnalysisSimulation<
 
   protected insertSimulationExperiment() {
     const { db } = this.root!
-    const { duration, name, startTime, timePerStep, spiceOptions } =
-      this._parsedProps
+    const {
+      duration,
+      name,
+      startTime,
+      timePerStep,
+      spiceOptions,
+      calculateInitialOperatingPoint,
+    } = this._parsedProps
 
     const ibisPinStates = this.getInheritedProperty("analogSimulationDisabled")
       ? {}
@@ -94,6 +100,7 @@ export class AnalogTransientSimulation extends AnalogAnalysisSimulation<
       start_time_ms: startTime,
       time_per_step: timePerStep,
       spice_options: spiceOptions,
+      calculate_initial_operating_point: calculateInitialOperatingPoint,
       spice_engine: this.getSpiceEngineName(),
       pcb_spice_channel: AnalogTransientSimulation_getPcbSpiceChannel(this),
       subcircuit_id: this.getSubcircuit().subcircuit_id!,
