@@ -35,7 +35,7 @@ test("superscript phase waits for descendant label work and supports dirty updat
   ).toBe(false)
   finishTraceRender()
   await traceRenderFinished
-  await Promise.resolve()
+  await Bun.sleep(0)
   root.runRenderCycle()
   expect(root.initialCalls).toBe(1)
   root.runRenderCycle()

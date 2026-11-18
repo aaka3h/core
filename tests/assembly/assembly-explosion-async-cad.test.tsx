@@ -33,6 +33,7 @@ test("explosion phases wait for CAD effects anywhere in the assembly tree", asyn
   expect(circuit.db.cad_component.list()).toHaveLength(0)
   expect(circuit.db.cad_explosion_stage.list()).toHaveLength(0)
   expect(circuit.db.cad_explosion_move.list()).toHaveLength(0)
+  await Promise.resolve()
   part.release()
   await circuit.renderUntilSettled()
   const cad = circuit.db.cad_component.list()[0]

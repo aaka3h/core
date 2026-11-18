@@ -375,7 +375,8 @@ export abstract class Renderable implements IRenderable {
     const asyncEffectId = `${this._renderId}:${globalAsyncEffectCounter++}`
     const asyncEffect: AsyncEffect = {
       asyncEffectId,
-      promise: effect(), // TODO don't start effects until end of render cycle
+      // Register the effect before its callbacks can inspect the circuit.
+      promise: Promise.resolve().then(effect),
       phase: this._currentRenderPhase!,
       effectName,
       complete: false,

@@ -43,6 +43,7 @@ test("collision checks wait for async CAD and discard diagnostics for superseded
       .initialized,
   ).toBe(false)
   expect(circuit.db.cad_explosion_collision_error.list()).toHaveLength(0)
+  await Promise.resolve()
   obstacle.release()
   await circuit.renderUntilSettled()
   expect(circuit.db.cad_explosion_collision_error.list()).toHaveLength(1)

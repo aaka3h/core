@@ -26,8 +26,9 @@ test("compact phases respect pending async effects before initialization", async
   expect(component.renderPhaseStates.CheckRefDesConvention.initialized).toBe(
     false,
   )
-  component.release()
   await Promise.resolve()
+  component.release()
+  await Bun.sleep(0)
   component.runRenderPhase("CheckRefDesConvention")
   expect(component.calls).toEqual(["next"])
   expect(component.renderPhaseStates.CheckRefDesConvention.initialized).toBe(

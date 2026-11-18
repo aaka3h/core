@@ -3,8 +3,14 @@ import { getTestFixture } from "tests/fixtures/get-test-fixture"
 
 test("reading the circuit during routing keeps pours after the routed vias", async () => {
   const { circuit } = getTestFixture()
+  let viasSeenByPour = 0
   circuit.on("autorouting:start", () => {
     circuit.getCircuitJson()
+  })
+  circuit.on("solver:started", ({ solverName }) => {
+    if (solverName === "CopperPourPipelineSolver") {
+      viasSeenByPour = circuit.db.pcb_via.list().length
+    }
   })
 
   circuit.add(
@@ -46,4 +52,7 @@ test("reading the circuit during routing keeps pours after the routed vias", asy
     layer: "inner1",
     showPcbNotes: true,
   })
+  expect(circuit.db.pcb_trace.list()).toHaveLength(1)
+  expect(circuit.db.pcb_via.list().length).toBeGreaterThan(1)
+  expect(viasSeenByPour).toBe(circuit.db.pcb_via.list().length)
 })

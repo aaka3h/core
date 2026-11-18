@@ -44,6 +44,7 @@ test("repeated chips share pending and successful metadata fetches while retaini
     </group>,
   )
   circuit.render()
+  await Bun.sleep(0)
   // The request remains pending while all six chips reach their source checks.
   expect(fetchCalls).toBe(1)
   releaseFetch()

@@ -34,7 +34,7 @@ test("supplier updates discard stale lookups and clear outdated availability war
     </board>,
   )
   circuit.render()
-  await Promise.resolve()
+  await Bun.sleep(0)
   const resistor = circuit.selectOne(".R1") as NormalComponent
   resistor.setProps({
     ...resistor.props,
@@ -44,7 +44,7 @@ test("supplier updates discard stale lookups and clear outdated availability war
     supplier_part_numbers: { digikey: ["456-ND"] },
   })
   resistor.updateComponentAvailabilityWarning()
-  await Promise.resolve()
+  await Bun.sleep(0)
   expect(requests.map((request) => request.partNumber)).toEqual([
     "123-ND",
     "456-ND",
@@ -57,7 +57,7 @@ test("supplier updates discard stale lookups and clear outdated availability war
   )
 
   resistor.updateComponentAvailabilityWarning()
-  await Promise.resolve()
+  await Bun.sleep(0)
   requests[2].resolve({ stock: 0, price: null, currency: null })
   await circuit.renderUntilSettled()
   expect(circuit.db.source_component_availability_warning.list()).toHaveLength(
